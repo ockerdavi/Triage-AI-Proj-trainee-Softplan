@@ -1,0 +1,47 @@
+﻿DETALHES
+[T02] (claro_simples) DIVERG╩NCIA
+    - Falso alarme: pediu revisÒo, mas o gabarito diz que nÒo precisava.
+    - Motivos do supervisor: INFO_ESSENCIAL_FALTANTE(revisao), INFO_COMPLEMENTAR(aviso)
+[T03] (misto_separavel) DIVERG╩NCIA
+    - Falso alarme: pediu revisÒo, mas o gabarito diz que nÒo precisava.
+    - Categoria: aceitas [['Rede e infraestrutura'], ['Outros']] | obtidas ['Rede e infraestrutura', 'Sistemas corporativos']
+    - Equipe: aceitas [['Infraestrutura'], ['Triagem manual']] | obtidas ['Infraestrutura', 'Equipe de sistemas']
+    - Motivos do supervisor: INFO_ESSENCIAL_FALTANTE(revisao), INFO_COMPLEMENTAR(aviso), AMBIGUIDADE_DETECTADA(aviso)
+[T08] (curto_claro) DIVERG╩NCIA
+    - Falso alarme: pediu revisÒo, mas o gabarito diz que nÒo precisava.
+    - Motivos do supervisor: RELATO_CURTO(revisao), INFO_COMPLEMENTAR(aviso), AMBIGUIDADE_DETECTADA(aviso)
+[T09] (claro_simples) DIVERG╩NCIA
+    - Falso alarme: pediu revisÒo, mas o gabarito diz que nÒo precisava.
+    - Motivos do supervisor: INFO_COMPLEMENTAR(aviso), PRIORIDADE_CRITICA(revisao)
+
+=== desenvolvimento: 10 chamado(s) ===
+Avaliados: 10 | nÒo avaliados: 0
+Modelos que responderam: gemini-3.1-flash-lite: 1, gemini-3.5-flash-lite: 9
+
+ClassificaþÒo (chamados com gabarito de classificaþÒo: 6)
+  SeparaþÒo (n║ de problemas): 6/6 (100%)
+  Categoria correta:           5/6 (83%)
+  Equipe correta:              5/6 (83%)
+
+Prioridade (chamados com limite definido: 1)
+  Prioridade inflada: 0 de 1
+
+RevisÒo humana
+  Falsos alarmes:   4 de 6 que N├O precisavam  [T02, T03, T08, T09]
+  Alertas perdidos: 0 de 4 que precisavam
+
+=== reservado: 5 chamado(s) ===
+Avaliados: 5 | nÒo avaliados: 0
+Modelos que responderam: gemini-3.5-flash-lite: 5
+
+ClassificaþÒo (chamados com gabarito de classificaþÒo: 3)
+  SeparaþÒo (n║ de problemas): 3/3 (100%)
+  Categoria correta:           3/3 (100%)
+  Equipe correta:              3/3 (100%)
+
+Prioridade (chamados com limite definido: 1)
+  Prioridade inflada: 0 de 1
+
+RevisÒo humana
+  Falsos alarmes:   0 de 2 que N├O precisavam
+  Alertas perdidos: 0 de 3 que precisavam

@@ -1,0 +1,5 @@
+google-genai>=2.0.0
+pydantic>=2
+python-dotenv
+streamlit==1.67.0
+pytest
