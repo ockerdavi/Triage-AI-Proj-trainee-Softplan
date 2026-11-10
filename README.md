@@ -347,6 +347,9 @@ Duas ressalvas sobre o próprio gabarito: a classificação da IA nesse chamado 
 
 ---
 
+```markdown
 ## Autor
 
-**Davi Ocker de Oliviera - ockerdavi4@gmail.com - linkedin: www.linkedin.com/in/davi-ocker-de-oliveira-01a9bb22b**
+**Davi Ocker de Oliveira**
+- **E-mail:** ockerdavi4@gmail.com
+- **LinkedIn:** [davi-ocker-de-oliveira](https://www.linkedin.com/in/davi-ocker-de-oliveira-01a9bb22b)
