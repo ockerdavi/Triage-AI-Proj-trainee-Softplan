@@ -132,7 +132,10 @@ Se uma regra do supervisor lançar uma exceção, o resultado **não é ignorado
 ├── validar_gabarito.py       # confere o gabarito antes de gastar cota
 ├── teste_conexao.py          # diagnóstico de latência dos modelos
 ├── dados/
-│   └── chamados_exemplo.json # 15 chamados fictícios com gabarito
+│   ├── chamados_exemplo.json          # 15 chamados fictícios com gabarito
+│   ├── respostas_*.json               # respostas da IA salvas (lidas por avaliar.py e pela interface)
+│   └── relatorio_v1_prompt_antigo.txt # relatório da primeira rodada
+├── docs/                     # capturas de tela da interface
 ├── testes/
 │   ├── test_regras.py        # testes do supervisor
 │   └── test_avaliar.py       # testes do pareamento usado na avaliação
@@ -200,7 +203,6 @@ As abas 2 e 3 funcionam sem chave de API, porque leem as respostas salvas em `da
 
 ![Auditoria do supervisor](docs/supervisor.png)
 
-
 ---
 
 ## Testes unitários
@@ -224,6 +226,8 @@ python avaliar.py                 # 3. pontua offline, sem usar a API
 ```
 
 **Por que separar a coleta da pontuação?** Os modelos variam entre execuções. Com as respostas salvas, é possível ajustar uma regra e reavaliar em segundos, sobre exatamente as mesmas respostas, sem gastar cota. Isso torna as comparações "antes e depois" justas.
+
+As respostas salvas das rodadas avaliadas estão em `dados/`, então é possível rodar `python avaliar.py --respostas dados/respostas_v2.json` sem chave de API.
 
 Opções úteis:
 
@@ -312,7 +316,11 @@ A IA separou o relato em **três problemas** (periféricos, tela azul com priori
 
 **Por que nenhuma regra bloqueou:** o supervisor só bloqueia por `MUITOS_PROBLEMAS` se a regra for de revisão, e hoje ela é aviso. As demais regras dependem de sinais que o próprio modelo emite (confiança, ambiguidades, informação essencial faltando), e aqui o modelo não emitiu nenhum: confiança de 0,95, nenhuma ambiguidade, nada essencial faltando. **A cobertura do supervisor depende, em parte, do que o modelo decide sinalizar.**
 
-**Decisão:** nenhuma regra foi alterada por causa desse chamado. O conjunto reservado já havia sido consultado, e ajustar uma regra olhando para ele invalidaria a medição. Fica registrado como limitação conhecida. Uma melhoria possível é tratar 3 ou mais problemas como revisão, a validar com chamados novos. Não foi verificado se o ajuste do prompt (que reduziu os falsos alarmes) também removeu um gatilho de revisão que existia na v1 para esse chamado.
+**Decisão:** nenhuma regra foi alterada por causa desse chamado. O conjunto reservado já havia sido consultado, e ajustar uma regra olhando para ele invalidaria a medição. Fica registrado como limitação conhecida. Uma melhoria possível é tratar 3 ou mais problemas como revisão, a validar com chamados novos.
+
+**Verificação na v1:** reavaliando as respostas salvas da primeira rodada, esse mesmo chamado **era bloqueado**, e por um único motivo de revisão: `INFO_ESSENCIAL_FALTANTE` (o modelo listava informação essencial faltando). `MUITOS_PROBLEMAS` e a ambiguidade eram apenas avisos. Na v2, com o novo teste de "essencial" no prompt, o modelo deixou de listar qualquer item essencial, e o gatilho desapareceu. **O mesmo sinal que gerava os falsos alarmes de `T02` e `T03` era o que protegia o `T14`.**
+
+O comportamento do sinal na v1 explica o compromisso: o campo de informação essencial disparou em 8 dos 15 chamados (6 precisavam de revisão e 2 não, `T02` e `T03`), e em dois casos (`T11` e `T14`) era o **único** motivo de revisão. Era abrangente, mas pouco preciso. O ajuste do prompt o tornou mais preciso e menos abrangente. Por isso o "0 alertas perdidos" do conjunto reservado na v1 também dependia de um sinal ruidoso. Como cada versão foi rodada uma vez, não dá para separar totalmente o efeito do prompt da variação natural do modelo.
 
 Duas ressalvas sobre o próprio gabarito: a classificação da IA nesse chamado estava correta, então o risco prático seria baixo, e o rótulo "precisa de revisão" é uma decisão do autor que não coincide com a política documentada (3 problemas geram aviso). `T09` e `T14` mostram que parte das divergências são **decisões de política**, não erros do modelo.
 
@@ -347,9 +355,9 @@ Duas ressalvas sobre o próprio gabarito: a classificação da IA nesse chamado 
 
 ---
 
-```markdown
 ## Autor
 
 **Davi Ocker de Oliveira**
+
 - **E-mail:** ockerdavi4@gmail.com
 - **LinkedIn:** [davi-ocker-de-oliveira](https://www.linkedin.com/in/davi-ocker-de-oliveira-01a9bb22b)
